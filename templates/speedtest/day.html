@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block head %}
+    <script src=" https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js "></script>
+{% endblock %}
+{% block content %}
+    <h1>Daily speedtest result</h1>
+    <canvas id="chart"></canvas>
+    <script>
+        const downloads = {{ downloads|tojson }};
+        const uploads = {{ uploads|tojson }};
+        const pings = {{ pings|tojson }};
+        const labels = {{ labels|tojson }};
+        const ctx = document.getElementById('chart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Download',
+                    data: downloads,
+                    backgroundColor: 'rgba(32, 201, 151, 0.5)',
+                    borderColor: 'rgba(32, 201, 151, 1)',
+                    yAxisID: 'left'
+                }, {
+                    label: 'Upload',
+                    data: uploads,
+                    backgroundColor: 'rgba(102, 16, 242, 0.5)',
+                    borderColor: 'rgba(102, 16, 242, 1)',
+                    yAxisID: 'left'
+                }, {
+                    label: 'Ping',
+                    data: pings,
+                    backgroundColor: 'rgba(220, 53, 69, 0.5)',
+                    borderColor: 'rgba(220, 53, 69, 1)',
+                    yAxisID: 'right'
+                }]
+            },
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
+                legend: {
+                    labels: {
+                        fontColor: 'white'
+                    }
+                },
+                scales: {
+                    left: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        color: 'white',
+                    },
+                    right: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        grid: {
+                            drawOnChartArea: false
+                        }
+                    },
+                }
+            }
+        });
+        chart.defaults.color = '#fff';
+    </script>
+{% endblock %}

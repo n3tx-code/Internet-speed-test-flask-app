@@ -17,8 +17,11 @@ This is a simple flask app that tests the internet speed of the network and stor
 
 ## Evolution
 
+- [ ] Installation script
 - [ ] Weekly view
 - [ ] Monthly view
 - [ ] Yearly view
 - [ ] Custom view
 - [ ] Send alert on telegram when the speed is below a certain level
+- [x] Adapt datetime to the user's timezone
+- [ ] Separate ping chart from download and upload chart

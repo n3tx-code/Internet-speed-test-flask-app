@@ -26,17 +26,18 @@ def run_speedtest():
 def speedtest_today():
     conn = sqlite3.connect('db.sqlite')
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM speedtest WHERE date >= date('now', '-1 day')")
+    cursor.execute(
+        "SELECT ping, download, upload, datetime(date, 'localtime') FROM speedtest WHERE date >= date('now', '-1 day')")
     results = cursor.fetchall()
     downloads = []
     uploads = []
     pings = []
     labels = []
     for row in results:
-        pings.append(row[1])
-        downloads.append(row[2])
-        uploads.append(row[3])
-        labels.append(row[4])
+        pings.append(row[0])
+        downloads.append(row[1])
+        uploads.append(row[2])
+        labels.append(row[3])
     # return render_template('speedtest/day.html', results=results)
     return render_template('speedtest/day.html', downloads=downloads, uploads=uploads, pings=pings, labels=labels)
 

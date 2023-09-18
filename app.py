@@ -4,6 +4,8 @@ import subprocess
 
 from flask import Flask, Response, render_template
 
+from tools import generate_data_for_previous_day
+
 app = Flask(__name__)
 
 
@@ -19,6 +21,7 @@ def run_speedtest():
                    str(json_test_result['upload']['bandwidth'] / 125000) + "')")
     conn.commit()
     conn.close()
+    generate_data_for_previous_day()
     return Response(status=200)
 
 

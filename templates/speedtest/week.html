@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% block head %}
+    <script src=" https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js "></script>
+{% endblock %}
+{% block content %}
+    <h1>Weekly speedtest result</h1>
+    <div id="weekly-chart-wrapper">
+        <div class="canvas-wrapper">
+            <canvas id="download"></canvas>
+        </div>
+        <div class="canvas-wrapper">
+            <canvas id="upload"></canvas>
+        </div>
+        <div class="canvas-wrapper">
+            <canvas id="ping"></canvas>
+        </div>
+    </div>
+    <script>
+        // Download
+        const downloads = {{ downloads|tojson }};
+        const downloads_max = []
+        const downloads_min = []
+        const downloads_avg = []
+        downloads.forEach((download) => {
+            downloads_max.push(download.max)
+            downloads_min.push(download.min)
+            downloads_avg.push(download.avg)
+        })
+        const downloadChartContext = document.getElementById('download').getContext('2d');
+        const downloadChart = new Chart(downloadChartContext, {
+            type: 'bar',
+            data: {
+                labels: {{ labels|tojson }},
+                datasets: [{
+                    label: 'Max',
+                    data: downloads_max,
+                    backgroundColor: 'rgba(32, 201, 151, 0.5)',
+                    borderColor: 'rgba(32, 201, 151, 1)',
+                }, {
+                    label: 'Avg',
+                    data: downloads_avg,
+                    backgroundColor: 'rgba(102, 16, 242, 0.5)',
+                    borderColor: 'rgba(102, 16, 242, 1)',
+                }, {
+                    label: 'Min',
+                    data: downloads_min,
+                    backgroundColor: 'rgba(220, 53, 69, 0.5)',
+                    borderColor: 'rgba(220, 53, 69, 1)',
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Download'
+                    }
+                }
+            },
+        });
+
+        // Ping
+        const pings = {{ pings|tojson }};
+        const pings_max = []
+        const pings_min = []
+        const pings_avg = []
+        pings.forEach((ping) => {
+            pings_max.push(ping.max)
+            pings_min.push(ping.min)
+            pings_avg.push(ping.avg)
+        })
+        const pingChartContext = document.getElementById('ping').getContext('2d');
+        const pingChart = new Chart(pingChartContext, {
+            type: 'bar',
+            data: {
+                labels: {{ labels|tojson }},
+                datasets: [{
+                    label: 'Max',
+                    data: pings_max,
+                    backgroundColor: 'rgba(32, 201, 151, 0.5)',
+                    borderColor: 'rgba(32, 201, 151, 1)',
+                }, {
+                    label: 'Avg',
+                    data: pings_avg,
+                    backgroundColor: 'rgba(102, 16, 242, 0.5)',
+                    borderColor: 'rgba(102, 16, 242, 1)',
+                }, {
+                    label: 'Min',
+                    data: pings_min,
+                    backgroundColor: 'rgba(220, 53, 69, 0.5)',
+                    borderColor: 'rgba(220, 53, 69, 1)',
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Ping'
+                    }
+                }
+            },
+        });
+
+        // Upload
+        const uploads = {{ uploads|tojson }};
+        const uploads_max = []
+        const uploads_min = []
+        const uploads_avg = []
+        uploads.forEach((upload) => {
+            uploads_max.push(upload.max)
+            uploads_min.push(upload.min)
+            uploads_avg.push(upload.avg)
+        })
+        const uploadChartContext = document.getElementById('upload').getContext('2d');
+        const uploadChart = new Chart(uploadChartContext, {
+            type: 'bar',
+            data: {
+                labels: {{ labels|tojson }},
+                datasets: [{
+                    label: 'Max',
+                    data: uploads_max,
+                    backgroundColor: 'rgba(32, 201, 151, 0.5)',
+                    borderColor: 'rgba(32, 201, 151, 1)',
+                }, {
+                    label: 'Avg',
+                    data: uploads_avg,
+                    backgroundColor: 'rgba(102, 16, 242, 0.5)',
+                    borderColor: 'rgba(102, 16, 242, 1)',
+                }, {
+                    label: 'Min',
+                    data: uploads_min,
+                    backgroundColor: 'rgba(220, 53, 69, 0.5)',
+                    borderColor: 'rgba(220, 53, 69, 1)',
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Upload'
+                    }
+                }
+            },
+        });
+    </script>
+{% endblock %}

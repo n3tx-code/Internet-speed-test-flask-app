@@ -1,0 +1,11 @@
+#weekly-chart-wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100vw;
+    flex-wrap: wrap;
+}
+
+#weekly-chart-wrapper .canvas-wrapper {
+    width: 45%;
+    height: 45vh;
+}

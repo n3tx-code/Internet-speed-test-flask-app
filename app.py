@@ -45,5 +45,42 @@ def speedtest_today():
     return render_template('speedtest/day.html', downloads=downloads, uploads=uploads, pings=pings, labels=labels)
 
 
+@app.route('/speedtest/week')
+def speedtest_week():
+    conn = sqlite3.connect('db.sqlite')
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT * FROM day_speedtest WHERE date >= date('now', '-7 day') ORDER BY date ASC")
+    results = cursor.fetchall()
+    downloads = []
+    uploads = []
+    pings = []
+    labels = []
+
+    for row in results:
+        pings.append(
+            {
+                'max': row[1],
+                'min': row[2],
+                'avg': row[3]
+            }
+        )
+        downloads.append(
+            {
+                'max': row[4],
+                'min': row[5],
+                'avg': row[6]
+            }
+        )
+        uploads.append({
+            'max': row[7],
+            'min': row[8],
+            'avg': row[9]
+        })
+        labels.append(row[10])
+
+    return render_template('speedtest/week.html', downloads=downloads, uploads=uploads, pings=pings, labels=labels)
+
+
 if __name__ == '__main__':
     app.run()

@@ -25,9 +25,9 @@ def generate_data_for_previous_day():
 
     # get data for the previous day
     cursor.execute(
-        "SELECT AVG(ping) as avg_ping, MIN(ping) as min_ping, MAX(ping) as max_ping, "
-        "AVG(download) as avg_download, MIN(download) as min_download, MAX(download) as max_download, "
-        "AVG(upload) as avg_upload, MIN(upload) as min_upload, MAX(upload) as max_upload "
+        "SELECT MAX(ping) as max_ping, MIN(ping) as min_ping, AVG(ping) as avg_ping, "
+        "MAX(download) as max_download, MIN(download) as min_download, AVG(download) as avg_download, "
+        "MAX(upload) as max_upload, MIN(upload) as min_upload, AVG(upload) as acg_upload "
         "FROM speedtest WHERE date BETWEEN '" + previous_speedtest_date_start.strftime(
             '%Y-%m-%d %H:%M:%S') + "' AND '" + previous_speedtest_date_end.strftime('%Y-%m-%d %H:%M:%S') + "'")
     result = cursor.fetchone()

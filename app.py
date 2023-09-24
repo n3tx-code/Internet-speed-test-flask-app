@@ -25,6 +25,7 @@ def run_speedtest():
     return Response(status=200)
 
 
+@app.route('/')
 @app.route('/speedtest/today')
 def speedtest_today():
     conn = sqlite3.connect('db.sqlite')
